@@ -1,7 +1,6 @@
 \documentclass[11pt,a4paper]{ivoa}
 \input tthdefs
 \usepackage{float}
-
 \usepackage{listings}
 \lstloadlanguages{XML,java}
 \lstset{flexiblecolumns=true,tagstyle=\ttfamily,
@@ -49,17 +48,17 @@ infrastructure that enable VO applications.
 
 \section{Introduction}
 
-The source DM is a background concern for the DM working group and more generally for the IVOA.
+The source DM is a long term concern for the DM working group and more generally for the IVOA.
 In the past years, there were some proposals to design a global model for sources \citep{wd:jesusdm} of for catalogs \citep{wd:catalog}.
 Other proposals, more model-agnostic, were focused on the data annotation in VOTables \citep{note:stcvot} \citep{note:seb}. In this case the goal was no longer to design a source model but to provide a complete description of  individual quantities (positions, velocity…).
-None of these proposals succeed for reasons that are not discussed here. 
+None of these proposals succeeded for reasons that are not discussed here. 
 
 The source DM issue resurfaced at the spring 2018 Interop in Victoria during an hands-on session focused on the tools available to work with VO data models and especially with VO-DML. The goal of this session was to annotate data from different origins in order to make them interoperable with each other. The main concern expressed during this session was not related to the tools themselves but to the lack of models for sources. 
-This is a big paradox in the VO world ; source data which represent the basic bricks of the astronomer work, have neither model nor standard access protocol. This paradox can be explained by the fact that sources data are multifaceted. The way of which source data are organized depends on the survey they come from, one the way they have been generated  and on the expected use. In a more general way, its depends on the science we want to do with them. This diversity can not be endorsed by a single model. Having a global source model would lead to a very complex solution not usable in practice.
+This is a big paradox in the VO world ; source data which represent the basic bricks of the astronomer work, have no model. This paradox can be explained by the fact that sources data are multifaceted. The way of which source data are organized depends on the survey they come from, one the way they have been generated  and on the expected use. In a more general way, it depends on the science we want to do with them. This diversity cannot be endorsed by a single model. Having a global source model would lead to a very complex solution not usable in practice.
 
 \subsection{A Model in Between Component Models and Product Models}
 IVOA models can be split in 2 classes. The component models, usable in various context for various data products (STC, Characterization \dots) and the product models (e.g. NDCube, Spectrum DM) describing each one specific science product.
-Source data do not match these 2 categories. They need component models to describe individual quantities but they cannot fit within one product model just because there is no science product enclosing all possible usages. 
+Source data do not match these 2 categories. They need component models to describe individual quantities but they cannot fit within one single product model just because there is no science product type enclosing all possible usages. 
 
 \subsection{The Paris Session}
 In early 2019, we proposed to resume the source DM project from input given by different people and taking into account the new VO landscape (VO-DML, STC, Astropy, TAP,...). In spring 2019, DAL-WG, Apps-WG and DM-WG have arranged a joined session in Paris where people involved in new surveys, data curators and client developers were invited to present their requirements.
@@ -67,14 +66,14 @@ The present note makes a coarse synthesis of these requirements and outlines a p
 The framework is referenced as CAB-MSD (Component and Association Based Model for Source Data  - until better:contest open) in the note.  
 
 \section{Outcomes of the Paris Session}
-The talks given in the Paris session addressed 3 different aspects of the source data processing: 1)data providers, 2)data curator and 3) client developers. 
+The talks given in the Paris session addressed 3 different points of view of the source data operations: 1) data providers point of view, 2) data curator  point of view and 3) client developers point of view. 
 The list of requirements issued from this session is still open but we can reasonably consider that for now, there is no incoming use case fundamentally different from those presented below.
-
+In addition we provided demands coming from the IVOA community for time series.
 \subsection{Data providers}
 The requirement of some data provider are summarised in table \ref{table:tsurvey}. More detail are available on the session agenda page
 \footnote{https://wiki.ivoa.net/twiki/bin/view/IVOA/SourceDM}%\citep{note:sdmpage}
 
-\begin{table}[H]
+\begin{table}[!ht]
 \begin{tabular}{|p{7em}|c|p{17em}|}
   \hline
   \multicolumn{1}{|c}{\bfseries Survey/Project} & \multicolumn{1}{|c}{\bfseries Speaker} & \multicolumn{1}{|c|}{\bfseries Required data content}
@@ -85,7 +84,7 @@ identifier, reference position, proper motion, parallax + distance, correlation,
  \\
   \hline
   Euclid & J. Salgado & 
-identifier, position, Reshift, correlation with Gaia, photometry (ground + sat), morphology, photometric, redshift
+identifier, position, Reshift, correlation with Gaia, photometry (ground + sat), morphology, reshift, photometric redshift
  \\
   \hline
   Exoplanets & M. Molinaro & 
@@ -107,9 +106,9 @@ All quantities are time dependant, Dependant on calibration + physical model
 
 
 \subsection{Data Curators}
-Vizier (table \ref{table:tcurator}) is a specific case; unlike the surveys mentioned above, it would have to apply CAB-MSD to a large variety of existing datasets daily updated. The easiness of the data annotation is very critical for Vizier.
+Vizier (table \ref{table:tcurator}) is a specific case; unlike the surveys mentioned above, it would have to apply CAB-MSD to a large variety of existing datasets daily updated. The easiness of data annotation is very critical for Vizier.
 
-\begin{table}
+\begin{table}[!ht]
 \begin{tabular}{|p{7em}|c|p{17em}|}
   \hline
     \multicolumn{1}{|c}{\bfseries Service} & \multicolumn{1}{|c}{\bfseries Speaker} & \multicolumn{1}{|c|}{\bfseries Required data content}
@@ -124,11 +123,11 @@ pre-existing data, grouping columns, lots of available metadata, column name for
 \label{table:tcurator}
 \end{table}
 
-Although not mentioned in the session, TAP services represent a case similar to Vizier in a sense that datasets have to be annotated on the fly. In a perfect world, a TAP server should annotate the queried quantities by using tags set in the TAP schema (UType columns in the TAP\_SCHEMA tables). The implies that the TAP schema is properly set. This feature remains on the edge of CAB-MSD but it should be kept in mind for the design of data annotation mechanism (see appendix A).     
+Although not mentioned in the session, TAP services represent a case similar to Vizier in a sense that datasets have to be annotated on the fly. In a perfect world, a TAP server should annotate the queried quantities by using tags set in the TAP schema (UType columns in the TAP\_SCHEMA tables). This implies that the TAP schema is properly set. This feature remains on the edge of CAB-MSD but it should be kept in mind for the design of data annotation mechanism (see appendix A).     
 
 \subsection{Client Developers}
 In addition to standalone clients (table \ref{table:tclient}), more and more users are using programming language APIs to analyse data (e.g. Astropy). In this context the capability of describing individual quantities in query responses is very valuable. This would allow the user to easily extract the quantity he or she needs out of the scope of any domain-specific model.
-\begin{table}[H]
+\begin{table}[!ht]
 \begin{tabular}{|p{7em}|c|p{17em}|}
   \hline
       \multicolumn{1}{|c}{\bfseries Tool/Service} & \multicolumn{1}{|c}{\bfseries Speaker} & \multicolumn{1}{|c|}{\bfseries Required data content}\\
@@ -165,7 +164,7 @@ photometry, Timestamp
 \label{table:ttime}
 \end{table}
 
-The Time Domain interest  group (table \ref{table:ttime}) agreed that most of the current use cases are covered by a model defining time series as tables of timestamp/photometric points. However, the notion of time series can be understood in a wider scope. A time series is a bidimensional structure. The first dimension, the independent axis, is the time, and the second one, the dependent axis can be anything. It can be magnitudes, velocities, positions, spectra, image or anything else.  It is impossible to describe this with a regular model. \cite{talk:lmanything}  showed  a possible solutions based on the usage of model references into the data mapping, but this approach has not been continued. This use case must however be part of the CAB-MSD requirements. 
+The Time Domain interest  group (table \ref{table:ttime}) agreed that most of the current use cases are covered by a model defining time series as tables of timestamp/photometric points. However, the notion of time series can be understood in a wider scope. A time series is a multi-dimensional structure. The first dimension, the independent axis, is the time, and the others, the dependent axes can be anything. They can be magnitudes, velocities, positions, spectra, image or anything else.  It is impossible to describe this with a regular model. \cite{talk:lmanything}  showed  a possible solutions based on the usage of model references into the data mapping, but this approach has not been continued. This use case must however be part of the CAB-MSD requirements. 
 
 \section{High level requirements}
 
@@ -173,8 +172,8 @@ The Time Domain interest  group (table \ref{table:ttime}) agreed that most of th
 The above list of requirements suggests that the source model must support 3 sorts of data:
 
 \begin{itemize}
-    \item \textit{[M1]} Support of any numerical measurements with their frames and units. 
-    \item \textit{[M2]} Support of geometric parameters.
+    \item \textit{[M1]} Support of any sort of numerical measurements with their coordinate frames and units
+    \item \textit{[M2]} Support of shape descriptors
     \item \textit{[M3]} Support of associated data
 \end{itemize}
 
@@ -198,7 +197,7 @@ The notion of annotation refers to the tags to be inserted into the data files t
     \item \textit{[DC2]} The data annotation must be limited to quantities with a real scientific interest. Annotating data has a great cost for the curator team, thus this action must be restricted as much as possible.
 \end{itemize}
 \begin{itemize}
-    \item \textit{[DC3]} CAB-MSD must be capable map complex quantities.
+    \item \textit{[DC3]} CAB-MSD must be able to map complex quantities.
     \begin{itemize}
         \item \textit{[DC31]} Quantities shared among multiple columns
         \item \textit{[DC32]} Quantities spread over multiple tables.
@@ -207,7 +206,7 @@ The notion of annotation refers to the tags to be inserted into the data files t
 \end{itemize}
 \begin{itemize}
     \item \textit{[DC4]} The CAB-MSD implementation must be designed in a way that facilitates the use of templates making easier the annotation process.
-    \item \textit{[DC5]} The CAB-MSD implementation must be designed in a way that quantities are independent to each-other.
+    \item \textit{[DC5]} The CAB-MSD implementation must be designed in a way that quantities can be mapped in a independent way.
 \end{itemize}
 
 \subsection{Client Requirements}
@@ -241,7 +240,7 @@ Before to be discussed in Paris, these requirements have been discussed many tim
 \begin{itemize}
     \item \textit{[C4]} The code must be independent of the searched quantities.
     \begin{itemize}
-        \item \textit{[C41]} Adding new quantities in CAB-MSD must not require code update, at least for the data extraction. This requirement is not valid for data processing.
+        \item \textit{[C41]} Extending the quantities supported by CAB-MSD must not require code update, at least for the data extraction. This requirement is not valid for data processing.
     \end{itemize}
 \end{itemize}
 \begin{itemize}
@@ -252,7 +251,7 @@ Before to be discussed in Paris, these requirements have been discussed many tim
 This has not been discussed in Paris, but the question of the model mapping in TAP responses is relevant.
 \begin{itemize}
     \item \textit{[T1]} CAB-MSD must be designed in such a way that the TAP\_SCHEMA can possibly be annotated.
-    \item \textit{[T2]} The TAP\_SCHEMA annotation must be designed in a way that the query engine is capable to generate correct annotations in basic query responses.
+    \item \textit{[T2]} The TAP\_SCHEMA annotation must be designed in a way that the TAP server is capable to generate correct annotations in basic query responses.
 \end{itemize}
 
 \section{Proposal}
@@ -307,7 +306,7 @@ The class diagram of figure \ref{fig:classdiag} shows the coarse components of C
     \begin{itemize}
         \item Other CAB-MSD instances
         \item VO products (e.g. SSLAP response)
-        \item Dataset returned by VO services (e.g. Datalinks)
+        \item VO services (e.g. Datalinks)
         \item Other VO model instances (e.g. Provenance, DatasetMetaData)
         \item All links have a semantic tag.
     \end{itemize}
@@ -317,13 +316,13 @@ The class diagram of figure \ref{fig:classdiag} shows the coarse components of C
 \begin{figure}
 \centering
 \includegraphics[width=1.0\textwidth]{CABSDM_diagram.png}
-\caption{Class diagram}
+\caption{Class diagram (red: imported VO models, blue: CAB-MSD classes, green: associated data)}
 \label{fig:classdiag}
 \end{figure}
 
 Table \ref{table:tclass} gives a few details on the model classes.
 
-\begin{table}[H]
+\begin{table}[!ht]
 \begin{tabular}{|r|p{19em}|}
   \hline
           \multicolumn{1}{|c}{\bfseries Class} &
@@ -335,7 +334,7 @@ Root class of the model - just needs a unique identifier
 \\  
 \hline
 Measure & 
-Imported from STC2 
+Imported from STC2 (Time, Position, Velocity, Polarization, Generic Measurment)
 \\
 \hline
 PhotometricMeas & 
@@ -376,7 +375,7 @@ Pointer to a CAB-MSD instance
 \\
 \hline
 \end{tabular}
-\caption{Table inside a floating element}
+\caption{Main classes of the model}
 \label{table:tclass}
 \end{table}
 
@@ -394,12 +393,12 @@ This proposal is derived from the VO-DML mapping syntax proposed by \citep{wd:wd
 \item Foreign key mechanism
 \end{itemize}
 
-After some tests with time domain data, \cite{talk:lmlite} \cite{talk:lmgaia} proposed some enhancements targeting a better human-readability and an easier job for legacy clients and for legacy data curators.
+After some tests with time domain data, \cite{talk:lmlite} \cite{talk:lmgaia} proposed enhancements targeting a better human-readability and an easier job for legacy clients and for legacy data curators:
 
 \begin{itemize}
-\item Making the syntax liter anywhere it is possible
-\item Using sometime element attributes than specific XML elements to facilitate the templating
-\item Implicitly considering that one model instance corresponds to one row of the root table and explicitly indicating that root table.
+\item Liter syntax anywhere when possible
+\item Usage in some places of element attributes instead of specific XML elements to facilitate the templating
+\item Usage of XML elements guiding the parser
 \end{itemize}
 
 This work could be a solid basis for the CAB-MSD annotation mechanism.
@@ -435,7 +434,7 @@ for( MappingElement mes: mesures){
 
 This note is not detailed enough to ensure that  CAB-MSD does fulfill all requirements; table \ref{table:tconclusion} show hows this could be achieved by this proposal.
 
-\begin{table}[H]
+\begin{table}[!ht]
 \begin{tabular}{|p{9em}|p{20em}|}
  \hline
 Minimizing the data annotation cost & 
@@ -449,7 +448,7 @@ The code has just to build maps with data matching the selector: no model specif
 \\
 \hline
 Homogeneity & 
-All quantities are mapped with the same syntax. The measurement structure (value/frame) is always based on STC.
+All quantities are mapped with the same syntax. The measurement structure (value/coord frame) is always based on STC.
 \\  
 \hline
 Link support &
@@ -457,11 +456,11 @@ Links with different sorts of datasets or services are well supported.
 \\ 
 \hline
 \end{tabular}
-\caption{Table inside a floating element}
+\caption{Key points of CAB-SMD }
 \label{table:tconclusion}
 \end{table}
 
-A large part of the requirements have been issued from the Paris Interop, but the proposed solutions relies on ideas discussed first in the frame of the VO-DML mapping focus group and then within the TDIG. They have been tested and code has been published.
+A large part of the requirements have been issued from the Paris Interop, but the proposed solutions relies on ideas discussed first in the frame of the VO-DML mapping focus group and then within the Time Series group. They have been tested and code has been published.
 This is why we are confident to have a solid basis for a model for source data. Paying attention to the interest of the community for CAB-MSD, we need now to check, keyboard on the table, that the use cases are really supported by the model, that the annotation process is acceptable and that coding parsers is easy, especially with AstroPy.
 This is a big job, thus contributors are welcome. We think it's worth it.
 
@@ -469,42 +468,45 @@ This is a big job, thus contributors are welcome. We think it's worth it.
 
 \section{TAP response annotation}
 \subsection{Storing CAB-MSD instance in a TAP service}
-The relational mapping of CAB-MSD is quite straightforward. We have one master table for the Source class and one table for each set of associated data (e.g. compagnons).
-In the TAP\_SCHEMA , all UType columns related to the  CAB-MSD stuff can be tagged with CAB-MSD identifiers (VO-DML ids): 
-\begin{table}
-\begin{tabular}{|p{9em}|p{20em}|}
- \hline
-tables & 
-Indicates whether the table contains CAB-MSD instances
-\\  
-\hline
-columns &
-Indicates CAB-MSD quantity attached to the column
-\\
-\hline
-keys &
-Indicates the semantic of the link represented by the join.
-Both table must then be declared as CAB-MSD instances
-\\  
-\hline
-\end{tabular}
-\caption{Table inside a floating element}
-\label{table:ttap}
-\end{table}
+The relational mapping of CAB-MSD is quite straightforward. We have one master table for the Source class and one table for each set of associated data (e.g. companions).
+If must be possible to provide the TAP server with the VO-DML identifiers attached to all of these tables. This can be done with either the TAP\_SCHEMA or with some external resources.
+This information can then be used by the server to set the mapping elements necessary to annotate the response. This should work as long as there is no joint tables, but this discussion is out of the scope of the note.
+%Th
+%In the TAP\_SCHEMA , all UType columns related to the  CAB-MSD stuff can be tagged with CAB-MSD identifiers (VO-DML ids): 
+%\begin{table}[!ht]
+%\begin{tabular}{|p{9em}|p{20em}|}
+% \hline
+%%tables & 
+%Indicates whether the table contains CAB-MSD instances
+%\\  
+%\hline
+%columns &
+%Indicates CAB-MSD quantity attached to the column
+%\\
+%\hline
+%keys &
+%Indicates the semantic of the link represented by the join.
+%Both table must then be declared as CAB-MSD instances
+%\\  
+%\hline
+%\end{tabular}
+%\caption{Table inside a floating element}
+%\label{table:ttap}
+%\end{table}%
 
-If the use of Utype columns is conflicting, the TAP service can manage   CAB-MSD identifiers in a private way.
+%If the use of Utype columns is conflicting, the TAP service can manage   CAB-MSD identifiers in a private way.
 
-\subsection{Querying CAB-MSD instances}
+%\subsection{Querying CAB-MSD instances}
 
-There are 2 cases here.
-\begin{itemize}
-    \item If the user just want to query a table as usual, we are in a regular situation. The query engine runs the request and annotates the columns with the Utype columns of the TAP\_SCHEMA whatever their content (model or Utype)
-    \item If the user want to get complete CAB-MSD instances, he/she can setup complex query with all needed joins. This works but with 2 major drawbacks:
-    \begin{itemize}
-        \item The query is quite difficult to write
-        \item The result is stacked in one denormalized table difficult to process
-    \end{itemize}
-\end{itemize}
+%There are 2 cases here.
+%\begin{itemize}
+%    \item If the user just want to query a table as usual, we are in a regular situation. The query engine runs the request and annotates the columns with the Utype columns of the TAP\_SCHEMA whatever their content (model or Utype)
+ %   \item If the user want to get complete CAB-MSD instances, he/she can setup complex query with all needed joins. This works but with 2 major drawbacks:
+  %  \begin{itemize}
+   %     \item The query is quite difficult to write
+%        \item The result is stacked in one denormalized table difficult to process
+%    \end{itemize}
+%\end{itemize}
 
 \section{A proposal to query CAB-MSD instances in one shot}
 ADQL is a  tabular oriented query language, thus there is no way to use it to get a set of model components in one shot.
