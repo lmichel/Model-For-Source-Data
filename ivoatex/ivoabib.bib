@@ -1,3 +1,9 @@
+NOTE: Do not use the records for IVOA standards (i.e., recommendations) from
+here.  They only are here for legacy documents.
+
+Instead, take the version-sharp, ADS-connected records from docrepo.bib.  See also ivoatexDoc, sect. 3.3.2.
+
+
 % [1] R. Hanisch, Resource Metadata for the Virtual Observatory , http://www.ivoa.net/Documents/latest/RM.html
 @Misc{std:RM,
   editor =       {R. Hanisch},
@@ -108,6 +114,17 @@ Version 1.03},
   url =          {http://www.ivoa.net/documents/UWS}
 }
 
+@misc{note:UWSRegExt,
+  author={Brian Major and Markus Demleitner and Patrick Dowler},
+  editor = {Brian Major},
+  title = {{UWS} Registry Extension Schema},
+  version = {1.0},
+  howpublished = {{IVOA} Note},
+  month=aug,
+  year=2018,
+  url={{http://ivoa.net/documents/Notes/UWSRegExt}}
+}
+
 @Misc{std:TAP,
   author =       {Patrick Dowler and Guy Rixon and Doug Tody},
   title =        {Table Access Protocol Version 1.0},
@@ -180,7 +197,7 @@ Version 1.03},
 %[7] WSDL, http://www.w3.org/TR/2007/REC-wsdl20-primer-20070626/
 @Misc{booth07,
   author =       {David Booth and Canyang Kevin Liu},
-  title =        {Web Services Description Language (WSDL) Version 2.0
+  title =        {Web Services Description Language ({WSDL}) Version 2.0
                   Part 0: Primer},
   howpublished = {{W3C Recommendation}},
   year =         2007,
@@ -189,7 +206,7 @@ Version 1.03},
 
 @Misc{std:XPATH,
   author =       {James Clark and Steve DeRose},
-  title =        {XML Path Language (XPath), Version 1.0},
+  title =        {{XML} Path Language ({XPath}), Version 1.0},
   howpublished = {{W3C Recommendation}},
   year =         1999,
   url =          {http://www.w3.org/TR/1999/REC-xpath-19991116},
@@ -421,11 +438,11 @@ Alexander Szalay and Yuji Shirasaki and Maria A. Nieto-Santisteban and Masatoshi
 }
 
 @Misc{std:VOSPACE,
-  editor =       {Matthew Graham},
-  author =       {Matthew Graham and Dave Morris and Guy Rixon},
-  title =        {{VOSpace} specification},
+  editor =       {Matthew Graham and Brian Major},
+  author =       {Matthew Graham and Dave Morris and Guy Rixon and Pat Dowler and André Schaaff and Doug Tody and Brian Major},
+  title =        {{VOSpace} specification - Version 2.1},
   howpublished = {{IVOA Recommendation}},
-  year =         {2009},
+  year =         {2018},
   url =          {http://www.ivoa.net/documents/VOSpace/}
 }
 
@@ -463,6 +480,17 @@ Alexander Szalay and Yuji Shirasaki and Maria A. Nieto-Santisteban and Masatoshi
   year =         {2013},
   url =          {http://ivoa.net/documents/STC-S/}
 }
+
+@Misc{note:STCX,
+  editor =       {Arnold Rots},
+  author =       {Arnold Rots},
+  title =        {STC-X: Space-Time Coordinate (STC) Metadata XML Implementation
+Version 1.00},
+  howpublished = {{IVOA Note}},
+  year =         {2005},
+  url =          {http://ivoa.net/documents/latest/STC-X.html}
+}
+
 
 @misc{std:OAIPMH,
 	key = {Open Archives Initiative},
@@ -518,8 +546,8 @@ Dave Winer
 }
 
 @Misc{std:CDP,
-        author={{Matthew Graham and Raymond Plante and Guy Rixon and Giuliano Taffoni}},
-        editor={Raymond Plante, Matthew Graham},
+        author={Matthew Graham and Raymond Plante and Guy Rixon and Giuliano Taffoni},
+        editor={Raymond Plante and Matthew Graham},
         title={{IVOA} Credential Delegation Protocol},
         year=2010,
         url={http://ivoa.net/Documents/CredentialDelegation/20100218/}
@@ -527,7 +555,7 @@ Dave Winer
 
 @Misc{std:VOSI,
 	author={{Grid and Web Services Working Group}},
-	editor={Matthew Graham, Guy Rixon, Patrick Dowler, Brian Major},
+	editor={Matthew Graham and Guy Rixon and Patrick Dowler and Brian Major},
 	title={{IVOA} Support Interfaces Version 1.1},
 	year=2017,
 	url={http://www.ivoa.net/documents/VOSI/index.html}
@@ -990,5 +1018,75 @@ archivePrefix = "ascl",
   howpublished = {{IETF BCP 47}},
   year = 2009,
   url = {https://tools.ietf.org/html/bcp47}
+}
+
+@Misc{note:votstc,
+  author =       {Markus Demleitner and François Ochsenbein and Johnathan
+  	McDowell and Arnold Rots},
+  title =        {Referencing {STC} in VOTable, Version 2.0},
+  howpublished = {{IVOA Note}},
+  year =         {2010},
+  month = 	     {June},
+  url =          {http://ivoa.net/documents/Notes/VOTableSTC}
+}
+
+@Misc{note:tsdisco,
+  author =       {François Bonnarel and Marco Molinaro},
+  title =        {TimeSeries Discovery and Access {DAL} procedure},
+  howpublished = {{IVOA Note}},
+  year =         {2018},
+  month = 	     {July},
+  url =          {http://ivoa.net/documents/Notes/TimeSeriesDiscoveryAndAccess/index.html},
+}
+
+@ARTICLE{1999A+A...348..642I,
+   author = {{Irwin}, A.~W. and {Fukushima}, T.},
+    title = "{A numerical time ephemeris of the Earth}",
+  journal = {Astronomy and Astrophysics},
+ keywords = {EPHEMERIDES, TIME, SOLAR SYSTEM: GENERAL},
+     year = 1999,
+    month = aug,
+   volume = 348,
+    pages = {642-652},
+   adsurl = {http://ads.ari.uni-heidelberg.de/abs/1999A%26A...348..642I},
+  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+@ARTICLE{2014A+C.....7...27D,
+   author = {{Demleitner}, M. and {Neves}, M.~C. and {Rothmaier}, F. and 
+	{Wambsganss}, J.},
+    title = "{Virtual observatory publishing with DaCHS}",
+  journal = {Astronomy and Computing},
+archivePrefix = "arXiv",
+   eprint = {1408.5733},
+ primaryClass = "astro-ph.IM",
+ keywords = {Virtual observatory, Publication tools},
+     year = 2014,
+    month = nov,
+   volume = 7,
+    pages = {27-36},
+      doi = {10.1016/j.ascom.2014.08.003},
+   adsurl = {http://adsabs.harvard.edu/abs/2014A%26C.....7...27D},
+  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+@ARTICLE{2015A+A...574A..36R,
+   author = {{Rots}, A.~H. and {Bunclark}, P.~S. and {Calabretta}, M.~R. and 
+	{Allen}, S.~L. and {Manchester}, R.~N. and {Thompson}, W.~T.
+	},
+    title = "{Representations of time coordinates in FITS. Time and relative dimension in space}",
+  journal = {Astronomy and Astrophysics},
+archivePrefix = "arXiv",
+   eprint = {1409.7583},
+ primaryClass = "astro-ph.IM",
+ keywords = {time, standards, methods: data analysis, techniques: miscellaneous, astronomical databases: miscellaneous, reference systems},
+     year = 2015,
+    month = feb,
+   volume = 574,
+      eid = {A36},
+    pages = {A36},
+      doi = {10.1051/0004-6361/201424653},
+   adsurl = {http://ads.ari.uni-heidelberg.de/abs/2015A%26A...574A..36R},
+  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 }
 
