@@ -1,0 +1,10 @@
+before_install:
+- sudo apt-get update
+- sudo apt-get install texlive-latex-extra
+# Initialize some directories before installing packages
+- sudo mkdir /home/travis/texmf
+- sudo tlmgr init-usertree
+- sudo tlmgr install stmaryrd # Test installing a package not included by default
+script:
+# Work with a timout of 3 minutes
+- travis_wait 3 make
